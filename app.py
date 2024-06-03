@@ -1,28 +1,24 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="Hello",
-    page_icon="👋",
+    page_title="Prompt Maker",
+    page_icon="👋"
 )
 
-st.write("# Welcome to Streamlit! 👋")
+st.write("# Welcome to the Prompt Maker! 👋")
 
-st.sidebar.success("Select a demo above.")
+st.sidebar.success("Select a page above.")
 
 st.markdown(
-    """
-    Streamlit is an open-source app framework built specifically for
-    Machine Learning and Data Science projects.
-    **👈 Select a demo from the sidebar** to see some examples
-    of what Streamlit can do!
-    ### Want to learn more?
-    - Check out [streamlit.io](https://streamlit.io)
-    - Jump into our [documentation](https://docs.streamlit.io)
-    - Ask a question in our [community
-        forums](https://discuss.streamlit.io)
-    ### See more complex demos
-    - Use a neural net to [analyze the Udacity Self-driving Car Image
-        Dataset](https://github.com/streamlit/demo-self-driving)
-    - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
+"""
+LLMs are great tools to assist us in a wide variety of tasks. But they lack some reasoning mechanisms that we humans possess and that are essential
+to produce coherent and valid answers : Self-Reflection, Back Tracking, Breaking the problem into smaller problems.\
+    
+
+To address that, the Prompt Maker allows you to construct a chain of prompts where you can re-utilize or not the output of the previous prompt.
+Therefore, you can implement the reasoning mechanisms enumerated before :
+- Self-Reflection : Ask the LLM to ponder about the previous output
+- Back Tracking : Ask the LLM to modify the previous output to better suit the previous prompt
+- Breaking the problem into sub-problems : Make the LLM perform several tasks, then combine everything at the end
 """
 )
