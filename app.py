@@ -44,10 +44,6 @@ with st.expander("**:arrow_forward: Prompts**", expanded=True):
         st.text_area(f'Prompt {i+1}', key=f'prompt_{i}')
     st.button("Generate answer", use_container_width=True, on_click=generate_answer, kwargs={"api_key":api_key, "model":model})
 
-# for i in range(st.session_state.nb_prompts):
-#     st.write(st.session_state[f"prompt_{i}"])
-
-# st.write(st.session_state.messages)
 if st.session_state.messages:
     with st.expander("**:arrow_forward: Answers**", expanded=True):
         if st.session_state.display_intermediate_answers:
