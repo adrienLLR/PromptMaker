@@ -15,20 +15,25 @@ def completion(input: str,
                 top_p: float = 1.0, 
                 frequency_penalty: float = 0.0, 
                 presence_penalty: float = 0.0) -> str:
-    # client = OpenAI(api_key=api_key)
-    # response = client.chat.completions.create(
-    # model=model,
-    # messages=[
-    #     {"role": "system", "content": "You are a helpful assistant."},
-    #     {"role": "user", "content": input}
-    # ],
-    # temperature=temperature,
-    # top_p=top_p,
-    # frequency_penalty=frequency_penalty,
-    # presence_penalty=presence_penalty
-    # )
-    # return response.choices[0].message.content
-    return input + str(time.time())
+    client = OpenAI(api_key=api_key)
+    response = client.chat.completions.create(
+    model=model,
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": input}
+    ],
+    temperature=temperature,
+    top_p=top_p,
+    frequency_penalty=frequency_penalty,
+    presence_penalty=presence_penalty
+    )
+    return response.choices[0].message.content
+
+def include_past_answers(prompt: str, past_answers: list):
+    for i in range(len(past_answers)):
+        # Add +1 to i because the prompt numbering start at 1
+        prompt = prompt.replace(f"[{i+1}]", past_answers[i])
+    return prompt
 
 def include_context_in_prompt(past_messages: list, prompt: str, model: str):
     """
@@ -38,9 +43,9 @@ def include_context_in_prompt(past_messages: list, prompt: str, model: str):
         return prompt
     character_limit = 8000 * 6 # Need to change that to use the model selected
     header = "Past conversation:"
-    current_prompt = f"\nCurrent prompt:\n user: {prompt}"
+    current_prompt = f"""  \nCurrent prompt:  \nuser: {prompt}"""
     for message in reversed(past_messages):
-        new_prompt = f"{message['role']}: {message['content']}\n" + current_prompt 
+        new_prompt = f"{message['role']}: {message['content']}  \n" + current_prompt 
         if len(new_prompt) + len(header) < character_limit:
             current_prompt = new_prompt
         else:
@@ -48,5 +53,5 @@ def include_context_in_prompt(past_messages: list, prompt: str, model: str):
     # Only add the header if at least one past message was concatenated   
     if len(current_prompt) == len(prompt):
         return prompt
-    current_prompt = f"{header}\n {current_prompt}"
+    current_prompt = f"{header}  \n{current_prompt}"
     return current_prompt

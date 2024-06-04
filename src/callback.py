@@ -1,5 +1,5 @@
 import streamlit as st
-from .utils import completion, include_context_in_prompt
+from .utils import *
 
 def clear_chat_history():
     st.session_state.messages = []
@@ -27,8 +27,9 @@ def generate_answer(api_key: str, model: str):
     answers = [answer]
     st.session_state["messages"].append({"role":"assistant", "content":answer})
     for i in range(1, st.session_state.nb_prompts):
-        prompt = st.session_state[f"prompt_{i}"].replace(f"[{i}]", answers[-1])
-        prompt = include_context_in_prompt(st.session_state["messages"], prompt, model) if st.session_state.use_context else prompt
+        prompt = include_past_answers(st.session_state[f"prompt_{i}"], answers)
         st.session_state["messages"].append({"role":"user", "content":prompt})
+        prompt = include_context_in_prompt(st.session_state["messages"], prompt, model) if st.session_state.use_context else prompt
         answer = completion(prompt, api_key, model)
         st.session_state["messages"].append({"role":"assistant", "content":answer})
+        answers.append(answer)
