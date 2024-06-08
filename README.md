@@ -1,7 +1,7 @@
 # The Prompt Maker
 
 LLMs are great tools to assist us in a wide variety of tasks. But they lack some reasoning mechanisms that we humans possess and that are essential
-to produce coherent and valid answers : Self-Reflection, Back Tracking, Breaking the problem into smaller problems.\
+to produce coherent and valid answers : Self-Reflection, Back Tracking, Breaking the problem into smaller problems.
     
 
 To address that, the Prompt Maker allows you to construct a chain of prompts where you can re-utilize or not the output of the previous prompt.
